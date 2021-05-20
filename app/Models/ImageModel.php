@@ -5,7 +5,7 @@ use CodeIgniter\Model;
 class ImageModel extends Model{
   protected $table = 'images';
   protected $primaryKey = 'id';
-  protected $allowedFields = [ 'url', 'uploaded_by']; 
+  protected $allowedFields = [ 'url', 'uploaded_by','service_id']; 
 
 
 }

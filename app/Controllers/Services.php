@@ -3,12 +3,13 @@
 namespace App\Controllers;
 use App\Models\Ajoutservice;
 use App\Models\UserModel;
+use App\Models\ImageModel;
 
 class Services extends BaseController
 {
     public function index()
     {
-        $id = session('id');
+        $id = session('userid');
 		$model = new UserModel();
 		$user = $model->find($id);
 		if($user){
@@ -22,8 +23,19 @@ class Services extends BaseController
 				'email' => $user['email'],
 				'profile_img_url' => $user['profile_image_url'],
 				'nombre_services' => $user['nombre_services'],
+				
 			];
 		} 
+
+
+	
+		
+		 $db = db_connect();
+		 $model = new Ajoutservice($db);
+		 $result = $model->where(session('userid'));
+		$data['results']	= $result;	
+
+
 
         return view('services',$data);
 
@@ -35,10 +47,11 @@ class Services extends BaseController
 
 	public function ajout()
 	{
+		$db = db_connect();
 		$data = [];
 		helper(['form']);
 
-		$id = session('id');
+		$id = session('userid');
 		$model = new UserModel();
 		$user = $model->find($id);
 		if($user){
@@ -46,10 +59,6 @@ class Services extends BaseController
 				'username' => $user['username'],
 				'nom' => $user['nom'],
 				'prenom' => $user['prenom'],
-				'date_naissance' => $user['date_naissance'],
-				'num_telephone_perso' => $user['num_tel_perso'],
-				'num_telephone_pro' => $user['num_tel_pro'],
-				'email' => $user['email'],
 				'profile_img_url' => $user['profile_image_url'],
 			];
 		} 
@@ -57,10 +66,14 @@ class Services extends BaseController
         
 		
 		if($this->request->getMethod() == 'post'){
+			
 
 			
-				$model = new Ajoutservice();
-                $fournisseur = new UserModel();
+				$model = new Ajoutservice($db);
+				$model1 = new UserModel();
+
+			
+				
 
 				$newData = [
                     'titre' => $this->request->getVar('titre'),
@@ -68,24 +81,58 @@ class Services extends BaseController
 					'tarif' => $this->request->getVar('tarif'),
 					'duree_delivration' => $this->request->getVar('duree'),
 					'duree_validite' => $this->request->getVar('dureevalidite'),
-                    'id_fournisseur' => session('id'),
 					'categorie' => $this->request->getVar('categorie'),
+					'id_fournisseur' => session('userid'),
 					
 					
 					
 				];
-				$model->save($newData);
+				$model->insert($newData);
+				$serviceID = $model->getInsertID();
 
-                
 				
+
+				if($image = $this->request->getFiles())
+					{
+					
+						foreach($image['images'] as $img)
+						{
+						if ($img->isValid() && ! $img->hasMoved())
+						{
+								$model = new ImageModel();
+								
+								$newName = $img->getRandomName();
+								$img->move('uploads/images', $newName);
+								$path ='uploads/images/'.$newName;
+								$imgData = [
+									'url' => $path,
+									'uploaded_by' => session('userid'),
+									'service_id' => $serviceID,
+									
+								];
+									
+
+								$model->save($imgData);
+						}
+						}
+						
+					
+					}
+
+					
+
+
+                	
 				session()->setFlashdata('success', 'Service ajouter avec succés !');
 				return redirect()->to('/dashboard');
+				
 
-			
             
 		}
         return view('ajoutservice',$data);
 	}
+
+	
 
 	
 }

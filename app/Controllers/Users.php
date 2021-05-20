@@ -15,17 +15,13 @@ class Users extends BaseController
 			if ($this->request->getMethod() == 'post') {
 				
 				$rules = [
-					'email' => 'required|min_length[6]|max_length[50]|valid_email',
-					'password' => 'required|min_length[8]|max_length[255]|validateUser[email,password]',
+					'email' => 'required',
+					'password' => 'required',
 				];
 
-				$errors = [
-					'password' => [
-						'validateUser' => 'Email ou mot de passe incorrect'
-					]
-				];
+				
 
-				if (! $this->validate($rules, $errors)) {
+				if (! $this->validate($rules)) {
 					$data['validation'] = $this->validator;
 				}else{
 					$model = new UserModel();
@@ -49,7 +45,7 @@ class Users extends BaseController
 
 		helper(['form']);
 		
-		return view('login');
+		return view('login',$data);
 		
 	}
 
@@ -57,7 +53,7 @@ class Users extends BaseController
 
 	private function setUserSession($user){
 		$data = [
-			'id' => $user['id'],
+			'userid' => $user['id'],
 			'firstname' => $user['nom'],
 			'lastname' => $user['prenom'],
 			'email' => $user['email'],
