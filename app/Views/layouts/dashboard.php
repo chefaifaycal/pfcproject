@@ -21,7 +21,7 @@
     
             </div>
   
-            <a href="#" class=" block p-3 hover:bg-gray-800 w-full ">Mon profile</a>
+            <a href="/Dashboard" class=" block p-3 hover:bg-gray-800 w-full ">Mon profile</a>
             <a href="/Services" class=" block p-3 hover:bg-gray-800 w-full ">Mes services</a>
             <a href="#" class="block p-3 hover:bg-gray-800 w-full ">Mes commandes</a>
             <a href="#" class="block p-3 hover:bg-gray-800 w-full ">Mes avis</a>

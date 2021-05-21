@@ -132,6 +132,16 @@ class Services extends BaseController
         return view('ajoutservice',$data);
 	}
 
+	public function delete($id){
+		$db = db_connect();
+		$service = new Ajoutservice($db);
+		$service->delete($id);
+		session()->setFlashdata('success', 'Service supprimer avec succés !');
+		return redirect()->to('/Services');
+
+
+	}
+
 	
 
 	
