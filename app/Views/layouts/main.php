@@ -37,7 +37,7 @@
             </div>
             <!-- secondery navbar -->
             <div class=" hidden md:flex items-center space-x-5">
-            <a href="/register" class="text-white font-semibold hover:text-gray-900">Inscription</a>
+            <a href="/preregistration" class="text-white font-semibold hover:text-gray-900">Inscription</a>
             <a href="/" class="text-white bg-gray-900 rounded-md p-2 px-3 hover:bg-gray-800 transition duration-300 ">Connexion</a>
             
             </div>

@@ -34,12 +34,14 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Users::index',['filter' => 'noauth']);
 $routes->match(['get','post'],'register', 'Users::register',['filter' => 'noauth']);
-//$routes->get('/users/profile/', 'Users::profile');
+$routes->match(['get','post'],'client', 'Users::client',['filter' => 'noauth']);
+
 $routes->get('/dashboard/logout', 'Users::logout');
 $routes->get('/dashboard', 'Dashboard::index',['filter' => 'auth']);
 $routes->get('/ajoutservice', 'Services::ajout',['filter' => 'auth']);
 $routes->get('/dashboard/profile', 'Dashboard::profile');
 $routes->get('/services/ajout', 'Services::ajout');
+$routes->get('/preregistration', 'Users::preregister');
 
 
 

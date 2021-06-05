@@ -4,7 +4,7 @@ use CodeIgniter\Model;
 
 class UserModel extends Model{
   protected $table = 'users';
-  protected $allowedFields = [ 'type','username', 'nom', 'prenom', 'date_naissance','num_tel_perso','num_tel_pro','email','pwd','profile_image_url'];
+  protected $allowedFields = [ 'type','username', 'nom', 'prenom', 'date_naissance','num_tel_perso','wilaya','daira','commune','code_postal','num_tel_pro','email','pwd','profile_image_url'];
   protected $beforeInsert = ['beforeInsert'];
   protected $beforeUpdate = ['beforeUpdate'];
 

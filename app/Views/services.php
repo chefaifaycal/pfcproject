@@ -22,7 +22,7 @@
           <div class="flex items-center p-3 m-2  w-full">
             <img class="w-40 h-40" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8f57XRrYoWPdX9NQssA79oCwvBVaTnSDEkA&usqp=CAU" alt="">
             <div class="flex flex-col mx-5 w-full">
-              <h3><?=$result->titre ?></h3>
+              <h3 class="font-bold"><?=$result->titre ?></h3>
               <p><?=$result->description ?></p>
               <div class="flex">
                 <p class="bg-blue-500 font-bold text-sm text-white rounded-md shadow-md p-2 m-2"><?=$result->categorie ?></p>

@@ -142,6 +142,62 @@ class Services extends BaseController
 
 	}
 
+	public function update(){
+		
+	}
+
+	public function recherche(){
+		helper(['form']);
+		$db = db_connect();
+
+			$id = session('userid');
+			$model = new UserModel();
+			$user = $model->find($id);
+			
+			$data = [
+				'type' => $user['type'],
+				'username' => $user['username'],
+				'nom' => $user['nom'],
+				'prenom' => $user['prenom'],
+				'date_naissance' => $user['date_naissance'],
+				'num_telephone_perso' => $user['num_tel_perso'],
+				'wilaya' => $user['wilaya'],
+				'daira' => $user['daira'],
+				'commune' => $user['commune'],
+				'codepostale' => $user['code_postal'],
+				'email' => $user['email'],
+				'profile_img_url' => $user['profile_image_url'],
+			];
+
+		
+
+
+		if($this->request->getMethod() == 'post'){
+
+
+			
+			$model1 = new Ajoutservice($db);			
+		
+
+			$wilaya = $this->request->getVar('wilayas');
+			$daira = $this->request->getVar('dairas');
+			$commune = $this->request->getVar('communes');
+			$tarif = $this->request->getVar('tarif');
+			$categorie = $this->request->getVar('categories');
+
+			$result = $model1->whereResearche($wilaya,$daira,$commune,$tarif,$categorie);
+			$data = [
+				'results' => $result,
+			];
+			
+
+			return view ('clientDashboardView',$data);
+		}
+
+		return view ('clientDashboardView',$data);
+	}
+
+
 	
 
 	
