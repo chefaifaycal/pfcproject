@@ -43,6 +43,25 @@ $routes->get('/dashboard/profile', 'Dashboard::profile');
 $routes->get('/services/ajout', 'Services::ajout');
 $routes->get('/preregistration', 'Users::preregister');
 
+$routes->get('/admin/users', 'Examples::customers_management');
+$routes->get('/admin/users/(:any)', 'Examples::customers_management/$1');
+$routes->post('/admin/users/(:any)', 'Examples::customers_management/$1');
+
+$routes->get('/admin/services', 'Examples::services_management');
+$routes->get('/admin/services/(:any)', 'Examples::services_management/$1');
+$routes->post('/admin/services/(:any)', 'Examples::services_management/$1');
+
+$routes->get('/admin/images', 'Examples::images_management');
+$routes->get('/admin/images/(:any)', 'Examples::images_management/$1');
+$routes->post('/admin/images/(:any)', 'Examples::images_management/$1');
+
+$routes->get('/admin/avis', 'Examples::avis_management');
+$routes->get('/admin/avis/(:any)', 'Examples::avis_management/$1');
+$routes->post('/admin/avis/(:any)', 'Examples::avis_management/$1');
+
+$routes->get('/admin/categories', 'Examples::categories_management');
+$routes->get('/admin/categories/(:any)', 'Examples::categories_management/$1');
+$routes->post('/admin/categories/(:any)', 'Examples::categories_management/$1');
 
 
 

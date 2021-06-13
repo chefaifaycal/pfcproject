@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <link rel="stylesheet" href="/assets/style.css">
-    
+    <script src="/assets/clientscript.js"></script> 
+    <script src="https://kit.fontawesome.com/8262f5f475.js" crossorigin="anonymous"></script>
     <title>Pfc Project</title>
 </head>
 <body>
@@ -15,9 +15,9 @@
     <div class="grid grid-cols-4">
         <div class="flex flex-col bg-gray-900 shadow-lg h-full min-w-full text-white items-center">
             <div class="flex flex-col items-center py-5">
-                <img src="<?= $profile_img_url?>" alt="" class="h-40 w-40 object-center rounded-full mb-3 ">
-                <span><?= $nom?> <?= $prenom?> </span>
-                <span>@<?= $username?></span>
+                <img src="<?= session('profile_img')?>" alt="" class="h-40 w-40 object-center rounded-full mb-3 ">
+                <span><?= session('firstname')?> <?= session('lastname')?> </span>
+                <span>@<?= session('username')?></span>
     
             </div>
   

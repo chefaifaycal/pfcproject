@@ -37,6 +37,8 @@ class Users extends BaseController
 
 					if($user['type'] == 'fournisseur'){
 						return redirect()->to('dashboard/');
+					}else if($user['type'] == 'Admin'){
+						return redirect()->to('admin/users');
 					}else return redirect()->to('dashboard/client');
 					
 
@@ -55,9 +57,11 @@ class Users extends BaseController
 	private function setUserSession($user){
 		$data = [
 			'userid' => $user['id'],
+			'username' => $user['username'],
 			'firstname' => $user['nom'],
 			'lastname' => $user['prenom'],
 			'email' => $user['email'],
+			'profile_img' => $user['profile_image_url'],
 			'isLoggedIn' => true,
 		];
 

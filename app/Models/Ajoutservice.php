@@ -19,6 +19,7 @@ class Ajoutservice extends Model
     protected $allowedFields = ['titre', 'description','tarif','duree_delivration','duree_validite', 'categorie','id_fournisseur'];
 
     public function __construct(ConnectionInterface &$db){
+        parent::__construct();
          $this->db =& $db;
     }
 

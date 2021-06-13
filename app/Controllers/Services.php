@@ -155,18 +155,8 @@ class Services extends BaseController
 			$user = $model->find($id);
 			
 			$data = [
-				'type' => $user['type'],
-				'username' => $user['username'],
-				'nom' => $user['nom'],
-				'prenom' => $user['prenom'],
-				'date_naissance' => $user['date_naissance'],
-				'num_telephone_perso' => $user['num_tel_perso'],
-				'wilaya' => $user['wilaya'],
-				'daira' => $user['daira'],
-				'commune' => $user['commune'],
-				'codepostale' => $user['code_postal'],
-				'email' => $user['email'],
-				'profile_img_url' => $user['profile_image_url'],
+				
+				
 			];
 
 		
@@ -187,7 +177,19 @@ class Services extends BaseController
 
 			$result = $model1->whereResearche($wilaya,$daira,$commune,$tarif,$categorie);
 			$data = [
+				'username' => $user['username'],
+				'nom' => $user['nom'],
+				'prenom' => $user['prenom'],
+				'date_naissance' => $user['date_naissance'],
+				'num_telephone_perso' => $user['num_tel_perso'],
+				'wilaya' => $user['wilaya'],
+				'daira' => $user['daira'],
+				'commune' => $user['commune'],
+				'codepostale' => $user['code_postal'],
+				'email' => $user['email'],
+				'profile_img_url' => $user['profile_image_url'],
 				'results' => $result,
+				
 			];
 			
 
@@ -197,6 +199,100 @@ class Services extends BaseController
 		return view ('clientDashboardView',$data);
 	}
 
+	public static function consulter($id){
+		$db = db_connect();
+		$model = new Ajoutservice($db);		
+		$service = $model->find($id);
+		$model1 = new UserModel();
+		$user = $model1->find($service['id_fournisseur']);
+		
+		$imagesModel = new ImageModel($db);
+		$images = $imagesModel->where($user['id']);
+
+		
+
+		
+
+		$avis = Avis::showAvis();
+		
+		$data = [
+				
+			'username' => $user['username'],
+			'nom' => $user['nom'],
+			'prenom' => $user['prenom'],
+			'date_naissance' => $user['date_naissance'],
+			'num_telephone_perso' => $user['num_tel_perso'],
+			'wilaya' => $user['wilaya'],
+			'daira' => $user['daira'],
+			'commune' => $user['commune'],
+			'codepostale' => $user['code_postal'],
+			'email' => $user['email'],
+			'profile_img_url' => $user['profile_image_url'],
+			'titre' => $service['titre'],
+			'description' => $service['description'],
+			'tarif' => $service['tarif'],
+			'duree_delivration' => $service['duree_delivration'],
+			'date_mise_enligne' => $service['date_mise_enligne'],
+			'categorie' => $service['categorie'],
+			'images' => $images,
+			'serviceid' => $id,
+			'avis' => $avis,
+			
+		];
+		
+		
+		return view('servicePage', $data);
+
+	}
+
+	public static function serviceData($id) {
+        $db = db_connect();
+		$model = new Ajoutservice($db);		
+		$service = $model->find($id);
+		$model1 = new UserModel();
+		$user = $model1->find($service['id_fournisseur']);
+		
+		$imagesModel = new ImageModel($db);
+		$images = $imagesModel->where($user['id']);
+
+
+		
+
+		
+
+		
+		
+		$data = [
+				
+			'username' => $user['username'],
+			'nom' => $user['nom'],
+			'prenom' => $user['prenom'],
+			'date_naissance' => $user['date_naissance'],
+			'num_telephone_perso' => $user['num_tel_perso'],
+			'wilaya' => $user['wilaya'],
+			'daira' => $user['daira'],
+			'commune' => $user['commune'],
+			'codepostale' => $user['code_postal'],
+			'email' => $user['email'],
+			'profile_img_url' => $user['profile_image_url'],
+			'titre' => $service['titre'],
+			'description' => $service['description'],
+			'tarif' => $service['tarif'],
+			'duree_delivration' => $service['duree_delivration'],
+			'date_mise_enligne' => $service['date_mise_enligne'],
+			'categorie' => $service['categorie'],
+			'images' => $images,
+			'serviceid' => $id,
+			
+			
+		];
+
+        return $data;
+    }
+
+
+
+	
 
 	
 
