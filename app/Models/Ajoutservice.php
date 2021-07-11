@@ -16,7 +16,7 @@ class Ajoutservice extends Model
     protected $returnType     = 'array';
     
 
-    protected $allowedFields = ['titre', 'description','tarif','duree_delivration','duree_validite', 'categorie','id_fournisseur'];
+    protected $allowedFields = ['id_service','titre', 'description','tarif','duree_delivration','duree_validite', 'categorie','id_fournisseur'];
 
     public function __construct(ConnectionInterface &$db){
         parent::__construct();
@@ -26,6 +26,8 @@ class Ajoutservice extends Model
     function where($id){
         return $this->db->table('services')->where(['id_fournisseur' => $id])->get()->getResult();
     }
+
+   
 
     function whereResearche($wilaya,$daira,$commune,$tarif,$categorie){
         /* $this->select('s.titre, s.description, s.tarif, s.date_mise_enligne, s.duree_delivration, s.categorie');

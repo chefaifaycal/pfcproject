@@ -31,5 +31,21 @@ class UserModel extends Model{
     return $data;
   }
 
+  function userinfo($userid){
+    $db      = \Config\Database::connect();
+    $builder = $db->table('users');
+
+    if(!empty($userid)){
+      
+        
+        return $builder->select('username')->where('id',$userid)->get()->getResultArray();
+      
+
+    }else return "null";
+
+
+    
+  }
+
 
 }

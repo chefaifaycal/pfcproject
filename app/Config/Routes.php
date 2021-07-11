@@ -63,7 +63,8 @@ $routes->get('/admin/categories', 'Examples::categories_management');
 $routes->get('/admin/categories/(:any)', 'Examples::categories_management/$1');
 $routes->post('/admin/categories/(:any)', 'Examples::categories_management/$1');
 
-
+/* Chat Filters */
+$routes->get('chat', 'Chat::index',['filter' => 'auth']);
 
 /*
  * --------------------------------------------------------------------

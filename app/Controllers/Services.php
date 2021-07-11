@@ -4,6 +4,8 @@ namespace App\Controllers;
 use App\Models\Ajoutservice;
 use App\Models\UserModel;
 use App\Models\ImageModel;
+use App\Models\AvisModel;
+use App\Models\CommandeModel;
 
 class Services extends BaseController
 {
@@ -203,31 +205,53 @@ class Services extends BaseController
 		$db = db_connect();
 		$model = new Ajoutservice($db);		
 		$service = $model->find($id);
-		$model1 = new UserModel();
-		$user = $model1->find($service['id_fournisseur']);
+
+		$model1 = new UserModel();		
+		$fournisseur = $model1->find($service['id_fournisseur']);
 		
 		$imagesModel = new ImageModel($db);
-		$images = $imagesModel->where($user['id']);
-
+		$images = $imagesModel->where($fournisseur['id']);
 		
+		/* avis infos */
+		$avisModel = new AvisModel();
+        $avis = $avisModel->where($id);
 
-		
+		$usersid = [];
+		$opinions = [];
+		$i = 0;
+		if(!empty($avis)){
+			foreach($avis as $row){
+				$uname = $model1->userinfo($row['user_id'])[0]['username']; 
+				$opinions[$i] = $row;
+				$opinions[$i]['username'] =$uname;
+				$i++;
+				//print_r($row['username']);
+				//$userinfo [] = $model1->userinfo($row['user_id']); //stock le resultat dans une variable
+				
+			}
+			
+		}else $usersinfo = [];		
 
-		$avis = Avis::showAvis();
+		$fournisseurData = [
+			'id' => $fournisseur['id'],
+			'username' => $fournisseur['username'],
+			'nom' => $fournisseur['nom'],
+			'prenom' => $fournisseur['prenom'],
+			'date_naissance' => $fournisseur['date_naissance'],
+			'num_telephone_perso' => $fournisseur['num_tel_perso'],
+			'wilaya' => $fournisseur['wilaya'],
+			'daira' => $fournisseur['daira'],
+			'commune' => $fournisseur['commune'],
+			'codepostale' => $fournisseur['code_postal'],
+			'email' => $fournisseur['email'],
+			'profile_img_url' => $fournisseur['profile_image_url'],
+		];		
 		
+		 
+
 		$data = [
 				
-			'username' => $user['username'],
-			'nom' => $user['nom'],
-			'prenom' => $user['prenom'],
-			'date_naissance' => $user['date_naissance'],
-			'num_telephone_perso' => $user['num_tel_perso'],
-			'wilaya' => $user['wilaya'],
-			'daira' => $user['daira'],
-			'commune' => $user['commune'],
-			'codepostale' => $user['code_postal'],
-			'email' => $user['email'],
-			'profile_img_url' => $user['profile_image_url'],
+			'fournisseurData' => $fournisseurData,
 			'titre' => $service['titre'],
 			'description' => $service['description'],
 			'tarif' => $service['tarif'],
@@ -236,7 +260,8 @@ class Services extends BaseController
 			'categorie' => $service['categorie'],
 			'images' => $images,
 			'serviceid' => $id,
-			'avis' => $avis,
+			'avis' => $opinions,
+			//'userinfo' => $userinfo,
 			
 		];
 		
@@ -290,6 +315,35 @@ class Services extends BaseController
         return $data;
     }
 
+	public function commander($id) {
+		$cmndModel = new CommandeModel();
+		$db = db_connect();
+		$model = new Ajoutservice($db);		
+		
+		
+		
+		
+			
+
+		
+
+		$data = [
+			'client_id' => session('userid'),
+			'fournisseur_id' => $model->find($id)['id_fournisseur'],
+			'service_id' => $id,
+			'statut_commande' => "false",
+		];
+
+
+		$cmndModel->save($data);
+		$path = '/Services/consulter/'.$id;
+		$session->setFlashdata('msg', 'succée');
+
+		return redirect()->to($path);
+
+		
+		
+	}
 
 
 	

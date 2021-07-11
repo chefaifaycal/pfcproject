@@ -27,8 +27,8 @@ class Avis extends BaseController
             
             $data = [];
             $data = Services::serviceData($serviceid);
-            
-            return view('servicePage',$data);
+            $path = '/Services/consulter/'.$serviceid;
+            return redirect()->to($path);
 
         }
 
@@ -42,19 +42,19 @@ class Avis extends BaseController
         $model = new AvisModel();
         $data = $model->findAll();
 
-        foreach($data as $row) {
+        /* foreach($data as $row) {
             $users_id['id'] = $row['user_id'];
-        } 
+        }  */
 
-        $user = new UserModel();
-        $users = $user->find($users_id['id']);
+        /* $user = new UserModel();
+        $users = $user->find($users_id['id']); */
 
         $avis = [
             'data' => $data,
-            'users' => $users,
+            /* 'users' => $users, */
         ];
 
-        return $avis;
+        return view('servicePage',$avis);
     }
 
     
